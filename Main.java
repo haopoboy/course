@@ -8,87 +8,95 @@ public class Main {
 	public static void main(String[] args) {
 		String[] all_department = {"資訊系"};
 		String[] all_other_cate = {"國際語言", "公民與歷史"};
-		String departmentName = "資訊系";
-		String departmentNo = "F7";
+		String departmentName = "資訊系", departmentName2 = "國際語言", departmentName3 = "公民與歷史";
+		String departmentNo = "F7", departmentNo2 = "A1", departmentNo3 = "A3";
 		String[] courseNum = {"11110","111001", "003", "004", "005"};
+		String[] courseNum2 = {"111","001"};
+		String[] courseNum3 = {"320"};
 		String[] courseId = {"10","5","3","4","2"};
+		String[] courseId2 = {"6","7"};
+		String[] courseId3 = {"8"};
 		String[] courseName = {"程式設計（一）","計算機概論","課程三","課程四","課程五"};
+		String[] courseName2 = {"英語口說訓練","科技英文"};
+		String[] courseName3 = {"民主憲政"};
 		String[] courseTeacher = {"張燕光","藍崑展","老師3","老師4","老師5"};
+		String[] courseTeacher2 = {"Cindy","Meggy"};
+		String[] courseTeacher3 = {"公民老師"};
 		String[] courseType = {"require", "require", "optional", "optional", "optional"};
 		int[] courseCredit = {3,3,2,2,2};
-		ArrayList<ArrayList<Session>> courseDateSession = new ArrayList<ArrayList<Session>>();
+		int[] courseCredit2 = {2,2};
+		int[] courseCredit3 = {2};
 		
-		for(int i = 0; i < courseName.length; ++i)
+		
+		//	public Course(String department, String depart_no, String id, String course_num, String course_name, String teacher, int credit, 
+		//ArrayList<Integer>date, String type)
+		
+		ArrayList<ArrayList<Course>> whole_school_courses = new ArrayList<ArrayList<Course>>();
+		
+		
+
+		//public School(List<String>departmentName, HashMap<String, ArrayList<Course>>otherType, ArrayList<String> cate)
+		ArrayList<String> all_department_list = new ArrayList<String>();	
+		//記一所學校裡面所有的系所名稱
+		for(int i = 0; i < all_department.length; ++i)
 		{
-			Session s = new Session(i+1, '1');
-			courseDateSession.add(new ArrayList<Session>());
-			courseDateSession.get(i).add(s);
-			s = new Session(i+1, '2');
-			courseDateSession.get(i).add(s);
-		}
-		ArrayList<ArrayList<Integer>> courseDate = new ArrayList<ArrayList<Integer>>();
-		for(int i = 0; i < courseName.length; ++i)
-			courseDate.add(convertSessToInt(courseDateSession.get(i)));
-		ArrayList<String> all_department_list = new ArrayList<String>();
-		for(int i = 0; i < all_department.length; ++i)	
 			all_department_list.add(all_department[i]);
-		ArrayList<String> other = new ArrayList<String>();
-		for(int i = 0; i < all_other_cate.length; ++i)	
-			other.add(all_other_cate[i]);
-		
-		ArrayList<ArrayList<Course>> allCourses = new ArrayList<ArrayList<Course>>();
-		allCourses.add(new ArrayList<Course>());
-		int index = 0;
-		for(int i = 0; i < courseName.length; ++i)
-		{
-			allCourses.get(index).add(new Course(departmentName, departmentNo, courseId[i], courseNum[i], courseName[i], courseTeacher[i], courseCredit[i], courseDate.get(i), courseType[i]));
-		}
-		allCourses.add(new ArrayList<Course>());
-		
-//		allCourses.get(1).add(new Course(department, depart_no, id, course_num, course_name, teacher, credit, date, type))
-		
-		
-		String[] department = {"資訊系","資訊系","資訊系","資訊系","資訊系","國際語言","國際語言","公民與歷史"};
-		String[] depart_no = {"F7","F7","F7","F7","F7","A1","A1","A9"}; 
-		String[] course_num = {"11110","111001", "003", "004", "005","006","007","008"};
-		String[] id = {"10","5","3","4","2","6","7","8"};
-		String[] course_name = {"程式設計（一）","計算機概論","課程三","課程四","課程五","英文","口說英文","公民與歷史(憲政民主體制)"};
-		String[] teacher = {"張燕光","藍崑展","老師3","老師4","老師5","Cindy","Mandy","公民老師"}; 
-		String[] types = {"require", "require", "optional", "optional", "optional","國際語言", "國際語言", "公民與歷史"};
-		int[] credit = {3,3,2,2,2,2,2,2}; 
-	
-		ArrayList<ArrayList<Integer>> date = new ArrayList<ArrayList<Integer>>();
-		for(int i = 0; i < 8; ++i)
-		{
-			date.add(new ArrayList<Integer>());
-			date.get(i).add(1+i*2);
-			date.get(i).add(2+i*2);
 		}
 		
-		ArrayList<Course> all = new ArrayList<Course>();
-		for(int i = 0; i < 8; ++i)
-		{
-			all.add(new Course(department[i], depart_no[i], id[i], course_num[i], course_name[i], teacher[i], credit[i], date.get(i), types[i]));
-		}
-		
-		ArrayList<Course> eng_course = new ArrayList<Course>();
-		eng_course.add(all.get(5));
-		eng_course.add(all.get(6));
-		ArrayList<Course> civil_course = new ArrayList<Course>();
-		civil_course.add(all.get(7));
-		HashMap<String, ArrayList<Course>> all_other_course = new HashMap<String, ArrayList<Course>>();
+		HashMap<String, ArrayList<Course>> all_other_courses = new HashMap<String, ArrayList<Course>>();
+		//記錄所有非系所的課程 ex: 國際語言 - 國際語言下所有的課
+		ArrayList<String> cate_names = new ArrayList<String>();
 		for(int i = 0; i < all_other_cate.length; ++i)
 		{
-			all_other_course.put(all_other_cate[i], eng_course);
+			cate_names.add(all_other_cate[i]);
+			all_other_courses.put(all_other_cate[i], new ArrayList<Course>());
 		}
-		all_other_course.put("國際語言", eng_course);
-		all_other_course.put("公民與歷史", civil_course);
-		ArrayList<Integer> atLeastNum = new ArrayList<Integer>();
-		atLeastNum.add(4);
-		atLeastNum.add(2);
+		ArrayList<ArrayList<Integer>> date = new ArrayList<ArrayList<Integer>>();
+		for(int i = 0; i < courseName2.length; ++i)
+		{
+			date.add(new ArrayList<Integer>());
+			date.get(i).add(7);
+			date.get(i).add(8);
+			all_other_courses.get(all_other_cate[0]).add(new Course(departmentName2, departmentNo2, courseId2[i], courseNum2[i], courseName2[i], courseTeacher2[i], courseCredit2[i], date.get(i), departmentName2));
+		}
+		date = new ArrayList<ArrayList<Integer>>();
+		for(int i = 0; i < courseName3.length; ++i)
+		{
+			date.add(new ArrayList<Integer>());
+			date.get(i).add(9);
+			date.get(i).add(10);
+			all_other_courses.get(all_other_cate[1]).add(new Course(departmentName3, departmentNo3, courseId3[i], courseNum3[i], courseName3[i], courseTeacher3[i], courseCredit3[i], date.get(i), departmentName3));
+		}
 		
-		School school = new School(all_department_list, all_other_course, other);
-		Department dep = new Department(all.subList(0, 2), all.subList(2, 5), (List<Integer>)atLeastNum, 5, 3);
+		//Department(List<Course> require, List<Course> optional, List<Integer> other_need, int total_optional_num, int optional_num)
+		ArrayList<Course> requireCourses = new ArrayList<Course>();
+		ArrayList<Course> optionalCourses = new ArrayList<Course>();
+		date = new ArrayList<ArrayList<Integer>>();
+		for(int i = 0; i < courseName.length; ++i)
+		{
+			date.add(new ArrayList<Integer>());
+			date.get(i).add(i*15+6);
+			date.get(i).add(i*15+7);
+		}
+		for(int i = 0; i < courseName.length; ++i)
+		{
+			if(courseType[i].equals("require"))
+			{
+				requireCourses.add(new Course(departmentName, departmentNo, courseId[i], courseNum[i], courseName[i], courseTeacher[i], courseCredit[i], date.get(i), courseType[i]));
+			}
+			else
+			{
+				optionalCourses.add(new Course(departmentName, departmentNo, courseId[i], courseNum[i], courseName[i], courseTeacher[i], courseCredit[i], date.get(i), courseType[i]));
+			}
+		}
+		
+		School school = new School(all_department_list, all_other_courses, cate_names);
+		ArrayList<Integer> atLeastNum = new ArrayList<Integer>();	//紀錄除了系上必選修外  其餘類別都各需多少學分
+		for(int i = 0; i < all_other_cate.length; ++i)
+		{
+			atLeastNum.add(4);
+		}		
+		Department dep = new Department(requireCourses, optionalCourses, (List<Integer>)atLeastNum, 20, 3);
 		Student student = new Student();
 
 		ArrayList<Session>request_time = new ArrayList<Session>();
@@ -99,12 +107,32 @@ public class Main {
 		ss = new Session(1, '8');
 		request_time.add(ss);
 		ArrayList<Course> result = school.request(student, dep, request_time, "資訊系");
-		for(int i = 0; i < all.size(); ++i)
+		ArrayList<Course> tmpR = dep.getRequiredCourseList();
+		ArrayList<Course> tmpO = dep.getOptionalCourseList();
+		for(int i = 0; i < tmpR.size(); ++i)
 		{
-			System.out.println(all.get(i).getCourseName());
-			for(int j = 0; j < all.get(i).getDate().size(); ++j)
-				convertIntToSess(all.get(i).getDate()).get(j).show();
+			System.out.println(tmpR.get(i).getCourseName());
+			for(int j = 0; j < tmpR.get(i).getDate().size(); ++j)
+				convertIntToSess(tmpR.get(i).getDate()).get(j).show();
 		}
+		for(int i = 0; i < tmpO.size(); ++i)
+		{
+			System.out.println(tmpO.get(i).getCourseName());
+			for(int j = 0; j < tmpO.get(i).getDate().size(); ++j)
+				convertIntToSess(tmpO.get(i).getDate()).get(j).show();
+		}
+		for(int i = 0; i < all_other_cate.length; ++i)
+		{
+			ArrayList<Course> tmp = all_other_courses.get(all_other_cate[i]);
+			for(int k = 0; k < tmp.size(); ++k)
+			{
+				System.out.println(tmp.get(k).getCourseName());
+				for(int j = 0; j < tmp.get(k).getDate().size(); ++j)
+					convertIntToSess(tmp.get(k).getDate()).get(j).show();
+			}
+		}
+
+		
 		System.out.println();
 		for(int i = 0; i < result.size(); ++i)
 		{
@@ -242,4 +270,5 @@ public class Main {
 		}
 		return result;
 	}
+	
 }
