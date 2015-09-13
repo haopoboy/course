@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name="robots" content="noindex">
+        <link rel="canonical" href="http://codepen.io/anon/pen/dYYazZ" />
+        <link rel='stylesheet prefetch' href='https://gitcdn.xyz/repo/angular/bower-material/v0.11.0/angular-material.css'>
+        <style class="cp-pen-styles">.listdemoBasicUsage md-divider {
+            margin-top: 10px;
+            margin-bottom: 10px; }
+        </style>
+        <style>
+            .tab{
+             display:inline-block; 
+             margin-left: 40px;
+            }
+            .even{
+             background: #ffeae9;
+            }
+            .odd{
+             background: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div ng-controller="AppCtrl" class="listdemoBasicUsage" ng-app="MyApp">
+          <md-content>
+            <md-list>
+              <md-subheader class="md-no-sticky">推薦課程</md-subheader>
+              <md-list-item class="md-3-line" ng-repeat="item in todos" ng-class-odd="'odd'" ng-class-even="'even'">
+                <md-checkbox ng-model="message.selected" value="{{ item.id }}" onclick="alert(angular.element('.md-checked').value);"></md-checkbox>
+                <div class="md-list-item-text" layout="column">
+                  <h3>{{ item.dept }}<span class="tab">{{ item.dept_no }}-{{ item.no }}</span><span class="tab">{{ item.course }}</span></h3>
+                  <h4>{{ item.instructor }}</h4>
+                  <p>{{ item.credits }}學分<span class="tab">{{ item.required }}</span><span class="tab">{{ item.schedule }}</span></p>
+                </div>
+              </md-list-item>
+              <md-divider></md-divider>
+            </md-list>
+          </md-content>
+          <md-button onclick="submit();">加入課程</md-button>
+        
+
+
+        </div>
+        <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js'></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-animate.min.js'></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.min.js'></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-aria.min.js'></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-messages.min.js'></script>
+        <script src='https://gitcdn.xyz/repo/angular/bower-material/v0.11.0/angular-material.js'></script>
+        <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/assets-cache.js'></script>
+        <script>
+        //document.querySelectorAll(".md-checked")[0].attributes["value"].value;
+        function submit() {
+          len = document.querySelectorAll(".md-checked").length;
+          ary = [];
+          for(var i = 0; i < len; i++)
+            ary[i] = document.querySelectorAll(".md-checked")[i].attributes["value"].value;
+          alert(ary);
+        };
+        angular.module('MyApp').config(function ($mdIconProvider) {
+            $mdIconProvider.iconSet('communication', 'img/icons/sets/communication-icons.svg', 24);
+        }).controller('AppCtrl', function ($scope, $http, $mdDialog ) {
+              $scope.todos = [];
+              $http.get('http://localhost:8080/test.json').
+              then(function(response) {
+                //alert(response.data.records[0]['id']);
+                $scope.todos = response.data.records;
+              }, function(response) {
+                alert("error");
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+              });
+        });
+        </script>
+    </body>
+</html>

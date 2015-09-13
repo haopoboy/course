@@ -1,0 +1,41 @@
+{ 
+"records":
+    [ 
+                        {
+                    "id": "F720300",
+                    "course": "資料結構",
+                    "instructor": "許靜芳",
+                    "schedule": "[3]3~4\t[5]2",
+                    "credits": "3",
+                    "required": "必修",
+                    "dept": "資訊系",
+                    "dept_no": "F7",
+                    "no": "079"
+                },
+                {
+                    "id": "F732700",
+                    "course": "製造資訊與系統概論",
+                    "instructor": "陳裕民 陳響亮 鄭芳田 陳朝鈞 蔡佩璇 李家岩*",
+                    "schedule": "[1]5~7",
+                    "credits": "3",
+                    "required": "選修",
+                    "dept": "資訊系",
+                    "dept_no": "F7",
+                    "no": "112"
+                },
+                {
+                    "id": "F720800",
+                    "course": "作業系統",
+                    "instructor": "張大緯",
+                    "schedule": "[1]8\t[4]5~6",
+                    "credits": "3",
+                    "required": "必修",
+                    "dept": "資訊系",
+                    "dept_no": "F7",
+                    "no": "119"
+                }
+    ] 
+}
+
+
+
