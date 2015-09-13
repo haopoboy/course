@@ -8,7 +8,6 @@ public class Course {
 	String course_name = new String();
 	String teacher = new String();
 	int credit;
-	boolean isRequired;
 	String type = new String();		//是系上必修還是選修還是基礎國文還是人文學等等
 	ArrayList<Integer> date = new ArrayList<Integer>();
 	public Course()
@@ -17,7 +16,7 @@ public class Course {
 	}
 	
 	public Course(String department, String depart_no, String id, String course_num, String course_name, String teacher, int credit, 
-			boolean isRequired,	ArrayList<Integer>date)
+			ArrayList<Integer>date, String type)
 	{
 		this.department = department;
 		this.depart_no = depart_no;
@@ -26,8 +25,8 @@ public class Course {
 		this.course_name = course_name;
 		this.teacher = teacher;
 		this.credit = credit;
-		this.isRequired = isRequired;
 		this.date = date;
+		this.type = type;
 		
 	}
 	
@@ -103,14 +102,6 @@ public class Course {
 		return credit;
 	}
 	
-	public void alterIsRequired(boolean yesOrNo)
-	{
-		isRequired = yesOrNo;
-	}
-	public boolean getIsRequired()
-	{
-		return isRequired;
-	}
 	public void alterWeek(ArrayList<Integer> newDate)
 	{
 		date = newDate;

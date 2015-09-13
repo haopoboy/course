@@ -13,17 +13,147 @@ public class School {
 		
 	}
 	
-	public School(List<String>departmentName, HashMap<String, ArrayList<Course>>otherType)
+	public School(List<String>departmentName, HashMap<String, ArrayList<Course>>otherType, ArrayList<String> cate)
 	{
 		department_name = new ArrayList<String>(departmentName);
 		other_type = new HashMap<String, ArrayList<Course>>(otherType);
+		cate_names = cate;
 	}
-	public ArrayList<Course> request(ArrayList<Integer>request_time, String department)
+	
+	private ArrayList<Integer> convertSessToInt(ArrayList<Session>input)
+	{
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		for(int i = 0; i < input.size(); ++i)
+		{
+			int week, sess;
+			week = input.get(i).getWeek();
+			switch (input.get(i).getSession()) {
+			case '1':
+				sess = 1;
+				break;
+			case '2':
+				sess = 2;
+				break;
+			case '3':
+				sess = 3;
+				break;
+			case '4':
+				sess = 4;
+				break;
+			case 'N':
+				sess = 5;
+				break;
+			case '5':
+				sess = 6;
+				break;
+			case '6':
+				sess = 7;
+				break;
+			case '7':
+				sess = 8;
+				break;
+			case '8':
+				sess = 9;
+				break;
+			case '9':
+				sess = 10;
+				break;
+			case 'A':
+				sess = 11;
+				break;
+			case 'B':
+				sess = 12;
+				break;
+			case 'C':
+				sess = 13;
+				break;
+			case 'D':
+				sess = 14;
+				break;
+			case 'E':
+				sess = 15;
+				break;
+
+			default:
+				sess = -10000;
+				break;
+			}
+			result.add(sess+(week-1)*15);
+		}
+		return result;
+	}
+	
+	private ArrayList<Session> convertIntToSess(ArrayList<Integer>input)
+	{
+		ArrayList<Session> result = new ArrayList<Session>();
+		for(int i = 0; i < input.size(); ++i)
+		{
+			Integer intt = input.get(i);
+			int week = (intt/15)+1;
+			char sess;
+			switch (intt%15) {
+			case 0:
+				sess = 'E';
+				break;
+			case 1:
+				sess = '1';
+				break;
+			case 2:
+				sess = '2';
+				break;
+			case 3:
+				sess = '3';
+				break;
+			case 4:
+				sess = '4';
+				break;
+			case 5:
+				sess = 'N';
+				break;
+			case 6:
+				sess = '5';
+				break;
+			case 7:
+				sess = '6';
+				break;
+			case 8:
+				sess = '7';
+				break;
+			case 9:
+				sess = '8';
+				break;
+			case 10:
+				sess = '9';
+				break;
+			case 11:
+				sess = 'A';
+				break;
+			case 12:
+				sess = 'B';
+				break;
+			case 13:
+				sess = 'C';
+				break;
+			case 14:
+				sess = 'D';
+				break;
+
+			default:
+				sess = 'Z';
+				break;
+			}
+			Session tmpS = new Session(week, sess);
+			result.add(tmpS);
+		}
+		return result;
+	}
+	
+	
+	public ArrayList<Course> request(Student student, Department dep, ArrayList<Session>ori_request_time, String department)
 	{
 		ArrayList<Course> result = new ArrayList<Course>();
-		Student student = new Student();
-		Department dep = new Department("資訊系");
 		ArrayList<String>notPassYet = dep.notPassed(student);
+		ArrayList<Integer>request_time = convertSessToInt(ori_request_time);
 		if(notPassYet.contains("require"))
 		{
 			ArrayList<Course> requiredCourseList = dep.getRequiredCourseList();
@@ -48,8 +178,10 @@ public class School {
 				}
 			}
 		}
-		for(int i = 2; i < notPassYet.size(); ++i)
+		for(int i = 0; i < notPassYet.size(); ++i)
 		{
+			if(notPassYet.get(i).equals("require") || notPassYet.get(i).equals("optional"))
+				continue;
 			ArrayList<Course> courseList = other_type.get(notPassYet.get(i));
 			for(int j = 0; j < courseList.size(); ++j)
 			{
@@ -60,10 +192,7 @@ public class School {
 				}
 			}
 		}
-		return result;
-		
-		
-		
+		return result;		
 	}
 	
 	

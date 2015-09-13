@@ -6,68 +6,51 @@ public class Student {
 	ArrayList<Course> optional = new ArrayList<Course>();	//目前修過哪些系上選修
 	int total_required_num;			//目前必修已經有幾學分了
 	int total_own_optional_num;		//目前系上選修已經有幾學分了
-	ArrayList<Integer> other_type_num;	//目前每一大類各幾學分了
-	HashMap<String, HashMap<String, Integer>> other_type = new HashMap<String, HashMap<String,Integer>>();
-	
-	public static void main(String[] args) {
-		Student s = new Student();
-		
-	}
+	ArrayList<Integer> other_type_num = new ArrayList<Integer>();	//目前每一大類各幾學分了
+	HashMap<String, ArrayList<Course>> other_type = new HashMap<String, ArrayList<Course>>();
 	
 	public Student()
 	{
 		//require
+		total_own_optional_num = 0;
+		total_required_num = 2;
+		other_type_num.add(0);
+		other_type_num.add(0);
+		other_type.put("國際語言", new ArrayList<Course>());
+		other_type.put("公民與歷史", new ArrayList<Course>());
 		ArrayList<Integer> arr = new ArrayList<Integer>();
-		arr.add(23);
-		arr.add(24);
-		arr.add(25);
-		Course course = new Course("資訊系", "F7", "10", "11110", "程式設計（一）", "張燕光", 2, true, arr);
+		arr.add(1);
+		arr.add(2);
+		arr.add(3);
+		Course course = new Course("資訊系", "F7", "10", "11110", "程式設計（一）", "張燕光", 2, arr, "require");
 		require.add(course);
 		arr = new ArrayList<Integer>();
-		arr.add(47);
-		arr.add(48);
-		arr.add(49);
-		course = new Course("資訊系", "F7", "5", "111001", "計算機概論", "藍崑展", 2, true, arr);
+		arr.add(4);
+		arr.add(5);
+		arr.add(6);
+		course = new Course("資訊系", "F7", "5", "111001", "計算機概論", "藍崑展", 2, arr, "require");
 		require.add(course);
-		
-		//other
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		map.put("公民與歷史(憲政民主體制)	", 2);
-		other_type.put("公民與歷史", map);
-		map = new HashMap<String, Integer>();
-		map.put("動物寄生蟲與生活	", 2);
-		other_type.put("生命科學與健康", map);
-		
 	}
 	public boolean alreadyPass(Course c)
 	{
 		String type = c.getType();
 		if(type.equals("require"))
 		{
-			for(int i = 0; i < require.size(); ++i)
-			{
-				if(c.equals(require.get(i)))
-				{
-					return true;
-				}
-			}
+			if(require.contains(c))
+				return true;
 			return false;
 		}
 		else if(type.equals("optional"))
 		{
-			for(int i = 0; i < optional.size(); ++i)
-			{
-				if(c.equals(optional.get(i)))
-				{
-					return true;
-				}
-			}
+			if(optional.contains(c))
+				return true;
 			return false;
 		}
 		else
 		{
-			HashMap<String, Integer> tmpList = other_type.get(type);
-			if(tmpList.containsKey(c.getCourseName()))
+			ArrayList<Course> tmpList = other_type.get(type);
+			
+			if(tmpList.contains(c))
 				return true;
 			return false;
 		}

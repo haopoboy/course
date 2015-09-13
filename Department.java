@@ -9,17 +9,7 @@ public class Department {
 	HashMap<String, Integer> rule = new HashMap<String, Integer>();				//各要多少學分
 	public Department(){}
 	
-	public Department(String s)
-	{
-		//test
-		ArrayList<Integer> arr = new ArrayList<Integer>();
-		arr.add(1);
-		arr.add(2);
-		
-		require.add(new Course(s, "F7", "000", "F7-001", "C#", "Linda", 2, false, arr));
-	}
-	
-	public Department(List<Course> require, List<Course> optional, List<String> other_type, List<Integer> other_need, int total_optional_num, int optional_num)
+	public Department(List<Course> require, List<Course> optional, List<Integer> other_need, int total_optional_num, int optional_num)
 	{
 		this.require = new ArrayList<Course>(require);
 		this.optional = new ArrayList<Course>(optional);
@@ -30,7 +20,7 @@ public class Department {
 		rule.put("optional", optional_num);		//optional_num 系上必修至少多少學分
 		for(int i = 0; i < other_need.size(); ++i)
 		{
-			rule.put(other_type.get(i), other_need.get(i));
+			rule.put(School.cate_names.get(i), other_need.get(i));
 		}
 	}
 	
@@ -46,7 +36,7 @@ public class Department {
 	
 	public void add_course(Course newCourse) 
 	{
-		if(newCourse.getIsRequired())
+		if(newCourse.getType().equals("require"))
 		{
 			if(!require.contains(newCourse))
 			{
@@ -64,7 +54,7 @@ public class Department {
 	
 	public void delete_course(Course toDelete) 
 	{
-		if(toDelete.getIsRequired())
+		if(toDelete.getType().equals("require"))
 		{
 			require.remove(toDelete);
 		}
@@ -86,11 +76,11 @@ public class Department {
 			result.add("optional");
 		}
 		ArrayList<Integer>	otherNum = s.getOtherNum();
-		for(int i = 2; i < rule.size(); ++i)
+		for(int i = 0; i < School.cate_names.size(); ++i)
 		{
-			if(otherNum.get(i) < rule.get(School.cate_names.get(i-2)))
+			if(otherNum.get(i) < rule.get(School.cate_names.get(i)))
 			{
-				result.add(School.cate_names.get(i-2));
+				result.add(School.cate_names.get(i));
 			}
 		}
 		return result;	
